@@ -3,6 +3,7 @@ package com.ola.weather.services;
 import java.util.Date;
 import java.util.List;
 
+import com.ola.weather.exceptions.ListException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +13,20 @@ import com.ola.weather.entity.Weather;
 @Service
 public class WeatherServiceImpl implements WeatherServiceInterface{
 
-	@Autowired
 	private WeatherDAO weatherDAO;
-	
-	public WeatherServiceImpl() {
-		
+
+	@Autowired
+	public WeatherServiceImpl( WeatherDAO weatherDAO) {
+		this.weatherDAO = weatherDAO;
 	}
-	
+
 	@Override
 	public List<Weather> getWeather() {
-		return this.weatherDAO.findAll();
+		try {
+			return this.weatherDAO.findAll();
+		} catch (Exception e) {
+			throw new ListException("Failed to get All weathers due to " + e.getStackTrace());
+		}
 	}
 
 	@Override
@@ -45,7 +50,8 @@ public class WeatherServiceImpl implements WeatherServiceInterface{
 
 	@Override
 	public List<Weather> getWeatherByDate(String date) {
-		return this.weatherDAO.getWeatherByDate(date);
+		Date dateObject = new Date(date);
+		return this.weatherDAO.getAllByDate(dateObject);
 	}
 
 	@Override

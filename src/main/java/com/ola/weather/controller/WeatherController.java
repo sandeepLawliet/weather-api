@@ -1,19 +1,18 @@
 package com.ola.weather.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
+import com.ola.weather.entity.Weather;
+import com.ola.weather.model.ListResponse;
+import com.ola.weather.model.Response;
+import com.ola.weather.services.WeatherServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ola.weather.entity.Weather;
-import com.ola.weather.services.WeatherServiceInterface;
+import java.util.List;
 
 @RestController
 public class WeatherController {
@@ -22,35 +21,39 @@ public class WeatherController {
 	WeatherServiceInterface weatherService;
 	//Get All the weather data
 	@GetMapping("/weather")
-	public List<Weather> getWeather() {
-		
-		return this.weatherService.getWeather();
-		
+	public ListResponse getWeather() {
+		List<Weather> result  = weatherService.getWeather();
+		return new ListResponse(HttpStatus.OK.value(), result, true);
 	}
 	
 	@GetMapping("/weather/{weatherId}")
-	public Weather getWeatherById(@PathVariable String weatherId) {
-		return this.weatherService.getWeatherById(Long.parseLong(weatherId));
+	public Response getWeatherById(@PathVariable String weatherId) {
+		Weather result  = weatherService.getWeatherById(Long.valueOf(weatherId));
+		return new Response(HttpStatus.OK.value(), result, true);
 	}
 	
 	@GetMapping("/weather/city/{city}")
-	public List<Weather> getWeatherByCity(@PathVariable String city) {
-		return this.weatherService.getWeatherByCity(city);
+	public ListResponse getWeatherByCity(@PathVariable String city) {
+		List<Weather> result  = weatherService.getWeatherByCity(city);
+		return new ListResponse(HttpStatus.OK.value(), result, true);
 	}
-	
+
 	@GetMapping("/weather/date/{date}")
-	public List<Weather> getWeatherByDate(@PathVariable String date) {
-		return this.weatherService.getWeatherByDate(date);
+	public ListResponse getWeatherByDate(@PathVariable String date) {
+		List<Weather> result = weatherService.getWeatherByDate(date);
+		return new ListResponse(HttpStatus.OK.value(), result, true);
 	}
 	
 	@GetMapping("/weather/sort/{date}")
-	public List<Weather> sortWeatherByDate(@PathVariable String date) {
-		return this.weatherService.sortWeatherByDate(date);
+	public ListResponse sortWeatherByDate(@PathVariable String date) {
+		List<Weather> result = weatherService.sortWeatherByDate(date);
+		return new ListResponse(HttpStatus.OK.value(), result, true);
 	}
 	
 	@PostMapping(path = "/weather", consumes = "application/json")
-	public Weather addWeather(@RequestBody Weather weather) {
-		return this.weatherService.addWeather(weather);
+	public Response addWeather(@RequestBody Weather weather) {
+		Weather result = weatherService.addWeather(weather);
+		return new Response(HttpStatus.OK.value(), result, true);
 	}
 	
 }

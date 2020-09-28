@@ -13,10 +13,9 @@ public interface WeatherDAO extends JpaRepository<Weather, Long> {
 	 @Query("SELECT w FROM Weather w WHERE " +
 	            "LOWER(w.city) LIKE LOWER(CONCAT('%',:city, '%'))")
 	 public List<Weather> getWeatherByCity(String city);
-	 
-	 @Query("SELECT w FROM Weather w WHERE w.date ='date'")
-	public List<Weather> getWeatherByDate(String date);
-	 
+
+	 List<Weather> getAllByDate(Date date);
+
 	 @Query("SELECT w FROM Weather w order by w.date asc ")
 	public List<Weather> sortWeatherByDateAsc();
 	 

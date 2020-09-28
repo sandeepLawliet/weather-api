@@ -1,15 +1,14 @@
 package com.ola.weather.services;
 
-import java.util.Date;
-import java.util.List;
-
 import com.ola.weather.entity.Weather;
 
+import java.util.List;
+
 public interface WeatherServiceInterface {
-	public List<Weather> getWeather();
-	public Weather getWeatherById(long weatherId);
-	public Weather addWeather(Weather weather);
-	public List<Weather> getWeatherByCity(String city);
-	public List<Weather> getWeatherByDate(String date);
-	public List<Weather> sortWeatherByDate(String date);
+	List<Weather> getWeather();
+	Weather getWeatherById(long weatherId);
+	Weather addWeather(Weather weather);
+	List<Weather> getWeatherByCity(String city);
+	List<Weather> getWeatherByDate(String date);
+	List<Weather> sortWeatherByDate(String date);
 }
