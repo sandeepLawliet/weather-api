@@ -1,6 +1,8 @@
 package com.ola.weather.services;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.ola.weather.exceptions.ListException;
@@ -50,8 +52,16 @@ public class WeatherServiceImpl implements WeatherServiceInterface{
 
 	@Override
 	public List<Weather> getWeatherByDate(String date) {
-		Date dateObject = new Date(date);
-		return this.weatherDAO.getAllByDate(dateObject);
+		String[] params = date.split("-");
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, Integer.valueOf(params[0]));
+		calendar.set(Calendar.MONTH, Integer.valueOf(params[1]) - 1);
+		calendar.set(Calendar.DAY_OF_MONTH, Integer.valueOf(params[2]));
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return this.weatherDAO.getAllByDate(calendar.getTime());
 	}
 
 	@Override
