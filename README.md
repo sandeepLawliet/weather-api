@@ -1,7 +1,7 @@
 # weather-api
 
 #sample get data, Date should come as yyyy-mm-dd and not the whole date object
-[
+```[
     {
         "id": 1,
         "date": "2020-09-28T10:28:04.522+00:00",
@@ -56,10 +56,11 @@
     }
 
 ]
+```
 
 
 #post request body
- {
+``` {
         "date": "2020-09-28",
         "lat": 25.0112,
         "lon": 34.5437,
@@ -71,3 +72,4 @@
             5.6
         ]
     }
+    ```
